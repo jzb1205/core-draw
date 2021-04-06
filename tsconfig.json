@@ -1,0 +1,29 @@
+{
+    "compilerOptions":{
+        "module": "ES2015",
+        "target": "es2015",
+        // "strict":true,
+        // "allowJs": false,
+        // "checkJs": false,
+        // "declaration": false, //d.ts文件  和allowJs不能同时设置成true
+        // "declarationMap": false, //.map文件
+        // "sourceMap": false, //.map文件
+        // "removeComments": true,
+        // "noEmit": true, //编译文件
+        // "importHelpers": true, //tslib里的复制工具函数
+        // "noImplicitAny": true, //noImplicitAny如果我们没有一些值设置明确类型，编译器会默认认为这个值为any类型，如果将noImplicitAny设为true,则如果没有设置明确的类型会报错，默认值为false
+        // "strictNullChecks": false,
+        // "strictBindCallApply": true,
+        // "strictPropertyInitialization": false, //strictPropertyInitialization设为true后会检查类的非undefined属性是否已经在构造函数里初始化，如果要开启这项，需要同时开启strictNullChecks,默认为false
+        // "noImplicitThis": true, //当this表达式的值为any类型的时候，生成一个错误
+        // "alwaysStrict": true,
+        // "noUnusedLocals": true, //noUnusedLocals用于检查是否有定义了但是没有使用变量，对于这一点的检测，使用ESLint可以在你书写代码的时候做提示，你可以配合使用，他的默认值为false
+        // "noUnusedParameters": true, //noUnusedParameters用于检测是否在函数中没有使用的参数
+        // "noImplicitReturns": true, //noImplicitReturns用于检查函数是否有返回值，设为true后，如果函数没有返回值则会提示，默认为false
+        // "noFallthroughCasesInSwitch": true, //noFallthroughCasesInSwitch用于检查switch中是否有case没有使用break跳出switch,默认为false
+        // "moduleResolution": "node", //模块解析策略，有"node"和"classic"两种类型
+        // "allowSyntheticDefaultImports": true,//用来指定允许从没有默认导出的模块中默认导入
+        // "esModuleInterop": true, //esModuleInterop通过导入内容创建命名空间，实现CommonJS和ES模块之间的互操作性
+    },
+    "compileOnSave":true
+}
