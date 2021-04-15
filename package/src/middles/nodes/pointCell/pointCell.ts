@@ -7,8 +7,8 @@
  * @FilePath: \gongfengd:\专题图\auto-draw\public\js\core\src\middles\nodes\pointCell\pointCell.ts
  */
 import { Node } from '../../../models/node';
-import PointSymbol from 'core-symbol'
-// var  elesymbol = require('./elesymbol.json') 
+// import PointSymbol from 'core-symbol'
+import PointSymbol from './../../../../../../core-symbol/package/index'  //本地测试
 
 export function pointCell(ctx: CanvasRenderingContext2D, node: Node) {
   const size = node.symbolSize || 1
@@ -26,17 +26,11 @@ export function pointCell(ctx: CanvasRenderingContext2D, node: Node) {
     scale:size*node.scaleNum/node.fontScale,
     opacity:1
   }
-
-  // const cellParams = elesymbol[node.realSymbolId];
-  // if(!cellParams){
-  //     return;
-  // }
-
-  // const symbol = new PointSymbol(cellParams);
   
-  // symbol.draw(ctx, {x,y},cellParams,symbolStyle);
-  
-  const symbol = new PointSymbol();
+  if (!window.drawSymbol) {
+    window.drawSymbol = new PointSymbol()
+  }
+  let symbol = window.drawSymbol
   
   symbol.draw(ctx, {x,y},symbolStyle);
 }

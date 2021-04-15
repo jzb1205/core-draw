@@ -1,8 +1,8 @@
 "use strict";
 exports.__esModule = true;
 exports.pointCell = void 0;
-var core_symbol_1 = require("core-symbol");
-var elesymbol = require('./elesymbol.json');
+// import PointSymbol from 'core-symbol'
+var index_1 = require("./../../../../../../core-symbol/package/index"); //本地测试
 function pointCell(ctx, node) {
     var size = node.symbolSize || 1;
     var w = node.rect.width;
@@ -18,11 +18,10 @@ function pointCell(ctx, node) {
         scale: size * node.scaleNum / node.fontScale,
         opacity: 1
     };
-    var cellParams = elesymbol[node.realSymbolId];
-    if (!cellParams) {
-        return;
+    if (!window.drawSymbol) {
+        window.drawSymbol = new index_1["default"]();
     }
-    var symbol = new core_symbol_1["default"](cellParams);
-    symbol.draw(ctx, { x: x, y: y }, cellParams, symbolStyle);
+    var symbol = window.drawSymbol;
+    symbol.draw(ctx, { x: x, y: y }, symbolStyle);
 }
 exports.pointCell = pointCell;

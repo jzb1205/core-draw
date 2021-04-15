@@ -6,7 +6,7 @@ exports.formatPadding = void 0;
  * @param  {Number|Array} padding input padding
  * @return {array} output
  */
-var formatPadding = function (padding) {
+exports.formatPadding = function (padding) {
     var top = 0;
     var left = 0;
     var right = 0;
@@ -26,7 +26,6 @@ var formatPadding = function (padding) {
     }
     return [top, right, bottom, left];
 };
-exports.formatPadding = formatPadding;
 /**
  * Checks if `value` is `null` or `undefined`.
  *
