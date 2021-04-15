@@ -8,7 +8,7 @@
  */
 import { Node } from '../../../models/node';
 import PointSymbol from 'core-symbol'
-var  elesymbol = require('./elesymbol.json') 
+// var  elesymbol = require('./elesymbol.json') 
 
 export function pointCell(ctx: CanvasRenderingContext2D, node: Node) {
   const size = node.symbolSize || 1
@@ -27,14 +27,18 @@ export function pointCell(ctx: CanvasRenderingContext2D, node: Node) {
     opacity:1
   }
 
-  const cellParams = elesymbol[node.realSymbolId];
-  if(!cellParams){
-      return;
-  }
+  // const cellParams = elesymbol[node.realSymbolId];
+  // if(!cellParams){
+  //     return;
+  // }
 
-  const symbol = new PointSymbol(cellParams);
+  // const symbol = new PointSymbol(cellParams);
   
-  symbol.draw(ctx, {x,y},cellParams,symbolStyle);
+  // symbol.draw(ctx, {x,y},cellParams,symbolStyle);
+  
+  const symbol = new PointSymbol();
+  
+  symbol.draw(ctx, {x,y},symbolStyle);
 }
 
 

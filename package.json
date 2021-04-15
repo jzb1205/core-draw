@@ -1,12 +1,12 @@
 {
   "name": "core-draw",
-  "version": "1.0.0",
+  "version": "1.0.4",
   "description": "",
   "main": "package/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "webpack serve --open chrome.exe",
-    "build": "tsc package/index && webpack"
+    "build": "tsc src/index && webpack"
   },
   "author": "",
   "license": "ISC",
@@ -22,6 +22,12 @@
     "webpack": "^5.30.0"
   },
   "dependencies": {
+    "core-symbol": "^1.0.8",
+    "webpack-cli": "^4.6.0",
     "yocto-queue": "^0.1.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jzb1205/core-draw.git"
   }
 }

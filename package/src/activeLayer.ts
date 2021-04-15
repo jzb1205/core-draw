@@ -41,7 +41,7 @@ export class ActiveLayer extends Layer {
 
   rotating = false;
   constructor(public options: Options = {}, TID: String) {
-    super(TID);
+    super(TID)
     this.data = Store.get(this.generateStoreKey('topology-data'));
     Store.set(this.generateStoreKey('LT:ActiveLayer'), this);
   }
