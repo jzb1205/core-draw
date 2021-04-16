@@ -1,13 +1,13 @@
 import { Store } from './store/index';
 import { Options } from './options';
 import { Node } from './models/node';
-import { TopologyData } from './models/data';
+import { GraphDrawData } from './models/data';
 import { Lock } from './models/status';
 import { PenType } from './models/pen';
 import { Layer } from './layer';
 
 export class DivLayer extends Layer {
-  protected data: TopologyData;
+  protected data: GraphDrawData;
   canvas = document.createElement('div');
   player = document.createElement('div');
   curNode: Node;

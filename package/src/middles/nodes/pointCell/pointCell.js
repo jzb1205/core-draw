@@ -1,7 +1,7 @@
 "use strict";
 exports.__esModule = true;
 exports.pointCell = void 0;
-var core_symbol_1 = require("core-symbol"); //第三方包
+var core_symbol_1 = require("core-symbol"); //npm包
 // import { PointSymbol } from '../../../../../../core-symbol/package/index'  //本地测试 原代码
 // import { PointSymbol } from '../../../../../../core-symbol/lib/pointSymbol'  //本地测试 打包代码
 function pointCell(ctx, node) {

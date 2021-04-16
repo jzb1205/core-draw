@@ -1,13 +1,13 @@
 import { Store } from './store/index';
 
-import { TopologyData } from './models/data';
+import { GraphDrawData } from './models/data';
 import { Options } from './options';
 import { Layer } from './layer';
 
 export class Canvas extends Layer {
   static dpiRatio = 0;
 
-  protected data: TopologyData;
+  protected data: GraphDrawData;
   canvas = document.createElement('canvas');
   width = 0;
   height = 0;

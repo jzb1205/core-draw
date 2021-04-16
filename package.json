@@ -1,12 +1,12 @@
 {
   "name": "core-draw",
-  "version": "1.0.7",
+  "version": "1.0.9",
   "description": "",
   "main": "package/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "webpack serve --open chrome.exe",
-    "build": "tsc src/index && webpack"
+    "build": "tsc src/index && webpack --watch --progress"
   },
   "author": "",
   "license": "ISC",
@@ -22,7 +22,7 @@
     "webpack-cli": "^4.6.0"
   },
   "dependencies": {
-    "core-symbol": "^1.0.11"
+    "core-symbol": "^1.0.14"
   },
   "repository": {
     "type": "git",

@@ -1,11 +1,11 @@
 "use strict";
 exports.__esModule = true;
-exports.TopologyData = void 0;
+exports.GraphDrawData = void 0;
 var node_1 = require("./node");
 var line_1 = require("./line");
 var status_1 = require("./status");
-var TopologyData = /** @class */ (function () {
-    function TopologyData(json) {
+var GraphDrawData = /** @class */ (function () {
+    function GraphDrawData(json) {
         this.pens = [];
         this.lineName = 'polyline';
         this.fromArrowType = 'none';
@@ -42,6 +42,6 @@ var TopologyData = /** @class */ (function () {
             }
         }
     }
-    return TopologyData;
+    return GraphDrawData;
 }());
-exports.TopologyData = TopologyData;
+exports.GraphDrawData = GraphDrawData;

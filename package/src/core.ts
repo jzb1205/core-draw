@@ -5,7 +5,7 @@ import { Pen, PenType } from './models/pen';
 import { Node, images } from './models/node';
 import { Point } from './models/point';
 import { Line } from './models/line';
-import { TopologyData } from './models/data';
+import { GraphDrawData } from './models/data';
 import { Lock, AnchorMode } from './models/status';
 import { drawNodeFns, drawLineFns } from './middles/index';
 import { Offscreen } from './offscreen';
@@ -37,15 +37,15 @@ enum MoveInType {
 
 interface ICaches {
   index: number;
-  list: TopologyData[];
+  list: GraphDrawData[];
 }
 
 const dockOffset = 10;
 
-export class Topology {
+export class GraphDraw {
   id: String;
-  data: TopologyData = new TopologyData();
-  clipboard: TopologyData;
+  data: GraphDrawData = new GraphDrawData();
+  clipboard: GraphDrawData;
   caches: ICaches = {
     index: 0,
     list: []
@@ -1780,7 +1780,7 @@ export class Topology {
     if (this.caches.index < this.caches.list.length - 1) {
       this.caches.list.splice(this.caches.index + 1, this.caches.list.length - this.caches.index - 1);
     }
-    const data = new TopologyData(this.data);
+    const data = new GraphDrawData(this.data);
     this.caches.list.push(data);
     if (this.caches.list.length > this.options.cacheLen) {
       this.caches.list.shift();
@@ -1801,7 +1801,7 @@ export class Topology {
           needPenMap[id] = new Line(pen);
         }
       }
-      const cacheListData: TopologyData = this.caches.list[0];
+      const cacheListData: GraphDrawData = this.caches.list[0];
       if (!cacheListData) {
         return;
       }
@@ -1819,7 +1819,7 @@ export class Topology {
       return;
     }
     this.divLayer.clear();
-    const data = new TopologyData(this.caches.list[--this.caches.index]);
+    const data = new GraphDrawData(this.caches.list[--this.caches.index]);
     this.data.pens.splice(0, this.data.pens.length);
     this.data.pens.push.apply(this.data.pens, data.pens);
     this.render(true);
@@ -1837,7 +1837,7 @@ export class Topology {
       return;
     }
     this.divLayer.clear();
-    const data = new TopologyData(this.caches.list[++this.caches.index]);
+    const data = new GraphDrawData(this.caches.list[++this.caches.index]);
     this.data.pens.splice(0, this.data.pens.length);
     this.data.pens.push.apply(this.data.pens, data.pens);
     this.render(true);
@@ -1982,7 +1982,7 @@ export class Topology {
       return;
     }
 
-    this.clipboard = new TopologyData({
+    this.clipboard = new GraphDrawData({
       pens: []
     });
     for (const pen of this.activeLayer.pens) {
@@ -2015,7 +2015,7 @@ export class Topology {
 
     this.options.disableScale = true
 
-    this.clipboard = new TopologyData({
+    this.clipboard = new GraphDrawData({
       pens: [],
     });
     if (type === 'first') {

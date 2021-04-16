@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <script src="./../lib/Topology.js"></script>
+    <script src="./../lib/graphDraw.js"></script>
     <style>
         .draw {
             display: flex;
@@ -22,14 +22,14 @@
 
 <body>
     <div class='draw'>
-        <div id="topology-canvas"></div>
+        <div id="graphDraw-canvas"></div>
     </div>
     <script>
         window.onload = function () {
             let canvasOptions = {
                 rotateCursor: "/img/rotate.cur",
             }
-            let canvas = new Topology("topology-canvas", canvasOptions);
+            let canvas = new GraphDraw("graphDraw-canvas", canvasOptions);
             console.log('canvas', canvas)
         }
     </script>

@@ -1,4 +1,4 @@
-import { TopologyData } from './models/data';
+import { GraphDrawData } from './models/data';
 import { Rect } from './models/rect';
 import { Point } from './models/point';
 import { Line } from './models/line';
@@ -10,7 +10,7 @@ import { Layer } from './layer';
 
 export class HoverLayer extends Layer {
   // debugger
-  protected data: TopologyData;
+  protected data: GraphDrawData;
 
   anchorRadius = 6;
 

@@ -4,7 +4,7 @@ module.exports = {
     mode: 'production',
     entry: './package/index.js',
     output: {
-        filename: 'Topology.js',
+        filename: 'graphDraw.js',
         path: path.resolve(__dirname, 'lib'),
         libraryTarget: "umd"
     },
@@ -20,5 +20,8 @@ module.exports = {
             },
             exclude: /node_modules/
         }]
+    },
+    performance: {
+        hints: false
     }
 }

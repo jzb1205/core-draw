@@ -6,7 +6,7 @@ import { Node } from './models/node';
 import { Line } from './models/line';
 import { Rect } from './models/rect';
 import { Point } from './models/point';
-import { TopologyData } from './models/data';
+import { GraphDrawData } from './models/data';
 import { Lock } from './models/status';
 
 import { drawLineFns } from './middles';
@@ -16,7 +16,7 @@ import { Layer } from './layer';
 
 export class ActiveLayer extends Layer {
   // debugger
-  protected data: TopologyData;
+  protected data: GraphDrawData;
 
   rotateCPs: Point[] = []; //旋转控制点
   sizeCPs: Point[] = []; //尺寸控制点

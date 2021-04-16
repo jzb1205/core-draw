@@ -3,7 +3,7 @@ import { Node } from './node';
 import { Line } from './line';
 import { Lock } from './status';
 
-export class TopologyData {
+export class GraphDrawData {
   pens: Pen[] = [];
   lineName = 'polyline';
   fromArrowType = 'none';

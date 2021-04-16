@@ -7,7 +7,7 @@ var __spreadArrays = (this && this.__spreadArrays) || function () {
     return r;
 };
 exports.__esModule = true;
-exports.Topology = void 0;
+exports.GraphDraw = void 0;
 var index_1 = require("./store/index");
 var options_1 = require("./options");
 var pen_1 = require("./models/pen");
@@ -44,10 +44,10 @@ var MoveInType;
     MoveInType[MoveInType["Rotate"] = 9] = "Rotate";
 })(MoveInType || (MoveInType = {}));
 var dockOffset = 10;
-var Topology = /** @class */ (function () {
-    function Topology(parent, options) {
+var GraphDraw = /** @class */ (function () {
+    function GraphDraw(parent, options) {
         var _this = this;
-        this.data = new data_1.TopologyData();
+        this.data = new data_1.GraphDrawData();
         this.caches = {
             index: 0,
             list: []
@@ -925,14 +925,14 @@ var Topology = /** @class */ (function () {
         window.topology = this;
         this.mutilData = [];
     }
-    Topology.prototype.resize = function (size) {
+    GraphDraw.prototype.resize = function (size) {
         this.canvas.resize(size);
         this.offscreen.resize(size);
         this.divLayer.resize(size);
         this.render();
         this.dispatch('resize', size);
     };
-    Topology.prototype.ondrop = function (event) {
+    GraphDraw.prototype.ondrop = function (event) {
         event.preventDefault();
         try {
             var json = JSON.parse(event.dataTransfer.getData('Text'));
@@ -961,7 +961,7 @@ var Topology = /** @class */ (function () {
         catch (e) {
         }
     };
-    Topology.prototype.getTouchOffset = function (touch) {
+    GraphDraw.prototype.getTouchOffset = function (touch) {
         var currentTarget = this.parentElem;
         var x = 0;
         var y = 0;
@@ -972,7 +972,7 @@ var Topology = /** @class */ (function () {
         }
         return { offsetX: touch.pageX - x, offsetY: touch.pageY - y };
     };
-    Topology.prototype.ontouched = function (event) {
+    GraphDraw.prototype.ontouched = function (event) {
         if (!this.touchedNode) {
             return;
         }
@@ -984,7 +984,7 @@ var Topology = /** @class */ (function () {
         this.addNode(node, true);
         this.touchedNode = undefined;
     };
-    Topology.prototype.addNode = function (node, focus) {
+    GraphDraw.prototype.addNode = function (node, focus) {
         if (focus === void 0) { focus = false; }
         if (this.data.locked || !index_2.drawNodeFns[node.name]) {
             return null;
@@ -1013,7 +1013,7 @@ var Topology = /** @class */ (function () {
         }
         return node;
     };
-    Topology.prototype.addLine = function (line, focus) {
+    GraphDraw.prototype.addLine = function (line, focus) {
         if (focus === void 0) { focus = false; }
         if (this.data.locked) {
             return null;
@@ -1032,7 +1032,7 @@ var Topology = /** @class */ (function () {
         return line;
     };
     // Render or redraw
-    Topology.prototype.render = function (noFocus) {
+    GraphDraw.prototype.render = function (noFocus) {
         if (noFocus === void 0) { noFocus = false; }
         if (noFocus) {
             this.activeLayer.pens = [];
@@ -1048,7 +1048,7 @@ var Topology = /** @class */ (function () {
         this.rendering = false;
     };
     // open - redraw by the data
-    Topology.prototype.open = function (data) {
+    GraphDraw.prototype.open = function (data) {
         if (!data) {
             data = { pens: [] };
             this.activeLayer.clear();
@@ -1105,18 +1105,18 @@ var Topology = /** @class */ (function () {
         this.animate(true);
         this.openSocket();
     };
-    Topology.prototype.openSocket = function (url) {
+    GraphDraw.prototype.openSocket = function (url) {
         this.closeSocket();
         if (url || this.data.websocket) {
             this.socket = new socket_1.Socket(url || this.data.websocket, this.data.pens);
         }
     };
-    Topology.prototype.closeSocket = function () {
+    GraphDraw.prototype.closeSocket = function () {
         if (this.socket) {
             this.socket.close();
         }
     };
-    Topology.prototype.overflow = function () {
+    GraphDraw.prototype.overflow = function () {
         var rect = this.getRect();
         var _a = this.canvas, width = _a.width, height = _a.height;
         var ex = rect.ex, ey = rect.ey;
@@ -1128,7 +1128,7 @@ var Topology = /** @class */ (function () {
         }
         this.resize({ width: width, height: height });
     };
-    Topology.prototype.setNodeText = function () {
+    GraphDraw.prototype.setNodeText = function () {
         this.inputObj.text = this.input.value;
         this.input.style.zIndex = '-1';
         this.input.style.left = '-1000px';
@@ -1138,7 +1138,7 @@ var Topology = /** @class */ (function () {
         this.dispatch('setText', this.inputObj);
         this.inputObj = null;
     };
-    Topology.prototype.highLight = function (type) {
+    GraphDraw.prototype.highLight = function (type) {
         this.clearHighLight();
         var pens = this.data.pens || [];
         var activeCell = this.activeLayer.pens[0];
@@ -1162,7 +1162,7 @@ var Topology = /** @class */ (function () {
             }
         }
     };
-    Topology.prototype.clearHighLight = function () {
+    GraphDraw.prototype.clearHighLight = function () {
         var pens = this.data.pens || [];
         if (this.cacheHighLight && this.cacheHighLight.length > 0) {
             pens.map(function (pen) {
@@ -1173,7 +1173,7 @@ var Topology = /** @class */ (function () {
         }
         this.cacheHighLight = [];
     };
-    Topology.prototype.getMoveIn = function (pt) {
+    GraphDraw.prototype.getMoveIn = function (pt) {
         this.lastHoverNode = this.moveIn.hoverNode;
         this.lastHoverLine = this.moveIn.hoverLine;
         this.moveIn.type = MoveInType.None;
@@ -1238,7 +1238,7 @@ var Topology = /** @class */ (function () {
             }
         }
     };
-    Topology.prototype.inChildNode = function (pt, children) {
+    GraphDraw.prototype.inChildNode = function (pt, children) {
         if (!children) {
             return null;
         }
@@ -1261,7 +1261,7 @@ var Topology = /** @class */ (function () {
         }
         return null;
     };
-    Topology.prototype.inNode = function (pt, node, inChild) {
+    GraphDraw.prototype.inNode = function (pt, node, inChild) {
         if (inChild === void 0) { inChild = false; }
         if (this.data.locked === status_1.Lock.NoEvent || !node.visible || node.locked === status_1.Lock.NoEvent) {
             return null;
@@ -1331,7 +1331,7 @@ var Topology = /** @class */ (function () {
         }
         return null;
     };
-    Topology.prototype.inLine = function (point, line) {
+    GraphDraw.prototype.inLine = function (point, line) {
         if (!line.visible) {
             return null;
         }
@@ -1368,7 +1368,7 @@ var Topology = /** @class */ (function () {
         }
         return null;
     };
-    Topology.prototype.getLineDock = function (point) {
+    GraphDraw.prototype.getLineDock = function (point) {
         this.hoverLayer.dockAnchor = null;
         for (var _i = 0, _a = this.data.pens; _i < _a.length; _i++) {
             var item = _a[_i];
@@ -1425,7 +1425,7 @@ var Topology = /** @class */ (function () {
         }
         return point;
     };
-    Topology.prototype.getPensInRect = function (rect) {
+    GraphDraw.prototype.getPensInRect = function (rect) {
         if (rect.width < 0) {
             rect.width = -rect.width;
             rect.x = rect.ex;
@@ -1454,7 +1454,7 @@ var Topology = /** @class */ (function () {
             }
         }
     };
-    Topology.prototype.getPensInRectCopy = function (rect) {
+    GraphDraw.prototype.getPensInRectCopy = function (rect) {
         if (rect.width < 0) {
             rect.width = -rect.width;
             rect.x = rect.ex;
@@ -1492,7 +1492,7 @@ var Topology = /** @class */ (function () {
             }
         }
     };
-    Topology.prototype.getAngle = function (pt) {
+    GraphDraw.prototype.getAngle = function (pt) {
         if (pt.x === this.activeLayer.rect.center.x) {
             return pt.y <= this.activeLayer.rect.center.y ? 0 : 180;
         }
@@ -1516,7 +1516,7 @@ var Topology = /** @class */ (function () {
         }
         return angle;
     };
-    Topology.prototype.showInput = function (item) {
+    GraphDraw.prototype.showInput = function (item) {
         if (this.data.locked || item.locked || item.hideInput || this.options.hideInput || item.name !== 'text') {
             // if (this.data.locked || item.locked || item.hideInput || this.options.hideInput) {
             return;
@@ -1531,14 +1531,14 @@ var Topology = /** @class */ (function () {
         this.input.style.zIndex = '1000';
         this.input.focus();
     };
-    Topology.prototype.getRect = function (pens) {
+    GraphDraw.prototype.getRect = function (pens) {
         if (!pens) {
             pens = this.data.pens;
         }
         return rect_2.getRect(pens, this.data.scale);
     };
     // Get a dock rect for moving nodes.
-    Topology.prototype.getDockPos = function (offsetX, offsetY) {
+    GraphDraw.prototype.getDockPos = function (offsetX, offsetY) {
         this.hoverLayer.dockLineX = 0;
         this.hoverLayer.dockLineY = 0;
         var offset = {
@@ -1578,18 +1578,18 @@ var Topology = /** @class */ (function () {
         }
         return offset;
     };
-    Topology.prototype.cache = function () {
+    GraphDraw.prototype.cache = function () {
         if (this.caches.index < this.caches.list.length - 1) {
             this.caches.list.splice(this.caches.index + 1, this.caches.list.length - this.caches.index - 1);
         }
-        var data = new data_1.TopologyData(this.data);
+        var data = new data_1.GraphDrawData(this.data);
         this.caches.list.push(data);
         if (this.caches.list.length > this.options.cacheLen) {
             this.caches.list.shift();
         }
         this.caches.index = this.caches.list.length - 1;
     };
-    Topology.prototype.cacheReplace = function (pens) {
+    GraphDraw.prototype.cacheReplace = function (pens) {
         if (pens && pens.length) {
             var needPenMap = {};
             for (var i = 0, len = pens.length; i < len; i++) {
@@ -1614,13 +1614,13 @@ var Topology = /** @class */ (function () {
             }
         }
     };
-    Topology.prototype.undo = function (noRedo) {
+    GraphDraw.prototype.undo = function (noRedo) {
         if (noRedo === void 0) { noRedo = false; }
         if (this.data.locked || this.caches.index < 1) {
             return;
         }
         this.divLayer.clear();
-        var data = new data_1.TopologyData(this.caches.list[--this.caches.index]);
+        var data = new data_1.GraphDrawData(this.caches.list[--this.caches.index]);
         this.data.pens.splice(0, this.data.pens.length);
         this.data.pens.push.apply(this.data.pens, data.pens);
         this.render(true);
@@ -1630,19 +1630,19 @@ var Topology = /** @class */ (function () {
         }
         this.dispatch('undo', this.data);
     };
-    Topology.prototype.redo = function () {
+    GraphDraw.prototype.redo = function () {
         if (this.data.locked || this.caches.index > this.caches.list.length - 2) {
             return;
         }
         this.divLayer.clear();
-        var data = new data_1.TopologyData(this.caches.list[++this.caches.index]);
+        var data = new data_1.GraphDrawData(this.caches.list[++this.caches.index]);
         this.data.pens.splice(0, this.data.pens.length);
         this.data.pens.push.apply(this.data.pens, data.pens);
         this.render(true);
         this.divLayer.render();
         this.dispatch('redo', this.data);
     };
-    Topology.prototype.toImage = function (type, quality, callback, padding, thumbnail) {
+    GraphDraw.prototype.toImage = function (type, quality, callback, padding, thumbnail) {
         if (thumbnail === void 0) { thumbnail = true; }
         var rect = new rect_1.Rect(0, 0, this.canvas.width, this.canvas.height);
         if (thumbnail) {
@@ -1681,7 +1681,7 @@ var Topology = /** @class */ (function () {
         }
         return canvas.toDataURL(type, quality);
     };
-    Topology.prototype.saveAsImage = function (name, type, quality, padding, thumbnail) {
+    GraphDraw.prototype.saveAsImage = function (name, type, quality, padding, thumbnail) {
         if (thumbnail === void 0) { thumbnail = true; }
         var a = document.createElement('a');
         a.setAttribute('download', name || '1.png');
@@ -1690,7 +1690,7 @@ var Topology = /** @class */ (function () {
         evt.initEvent('click', true, true);
         a.dispatchEvent(evt);
     };
-    Topology.prototype["delete"] = function (force) {
+    GraphDraw.prototype["delete"] = function (force) {
         var pens = [];
         var i = 0;
         for (var _i = 0, _a = this.activeLayer.pens; _i < _a.length; _i++) {
@@ -1714,7 +1714,7 @@ var Topology = /** @class */ (function () {
         this.cache();
         this.dispatch('delete', pens);
     };
-    Topology.prototype.removeNode = function (node) {
+    GraphDraw.prototype.removeNode = function (node) {
         var i = this.find(node);
         if (i > -1) {
             this.divLayer.removeDiv(this.data.pens[i]);
@@ -1726,7 +1726,7 @@ var Topology = /** @class */ (function () {
         this.render(true);
         this.cache();
     };
-    Topology.prototype.removeLine = function (line) {
+    GraphDraw.prototype.removeLine = function (line) {
         var i = this.find(line);
         if (i > -1) {
             var lines = this.data.pens.splice(i, 1);
@@ -1737,11 +1737,11 @@ var Topology = /** @class */ (function () {
         this.render(true);
         this.cache();
     };
-    Topology.prototype.cut = function () {
+    GraphDraw.prototype.cut = function () {
         if (this.data.locked) {
             return;
         }
-        this.clipboard = new data_1.TopologyData({
+        this.clipboard = new data_1.GraphDrawData({
             pens: []
         });
         for (var _i = 0, _a = this.activeLayer.pens; _i < _a.length; _i++) {
@@ -1765,9 +1765,9 @@ var Topology = /** @class */ (function () {
             pens: this.clipboard.pens
         });
     };
-    Topology.prototype.copy = function (type) {
+    GraphDraw.prototype.copy = function (type) {
         this.options.disableScale = true;
-        this.clipboard = new data_1.TopologyData({
+        this.clipboard = new data_1.GraphDrawData({
             pens: []
         });
         if (type === 'first') {
@@ -1801,7 +1801,7 @@ var Topology = /** @class */ (function () {
             this.clipboard.pens.push(penCopy);
         }
     };
-    Topology.prototype.paste = function () {
+    GraphDraw.prototype.paste = function () {
         var _this = this;
         this.unCombineAll();
         if (!this.clipboard || this.data.locked) {
@@ -1925,7 +1925,7 @@ var Topology = /** @class */ (function () {
             this.dispatch('paste', this.activeLayer.pens[0]);
         }
     };
-    Topology.prototype.unCombineAll = function () {
+    GraphDraw.prototype.unCombineAll = function () {
         var _this = this;
         this.data.pens.map(function (it) {
             if (it.name === 'combine') {
@@ -1933,7 +1933,7 @@ var Topology = /** @class */ (function () {
             }
         });
     };
-    Topology.prototype.calcCopyPen = function (pen, idMaps, relativeX, relativeY) {
+    GraphDraw.prototype.calcCopyPen = function (pen, idMaps, relativeX, relativeY) {
         if (pen instanceof line_1.Line) {
             pen.id = uuid_1.s8();
             var from_1 = new point_1.Point(pen.from.x + relativeX, pen.from.y + relativeY, pen.from.direction, pen.from.anchorIndex, idMaps[pen.from.id]);
@@ -2030,7 +2030,7 @@ var Topology = /** @class */ (function () {
             pen.init();
         }
     };
-    Topology.prototype.newId = function (node, idMaps) {
+    GraphDraw.prototype.newId = function (node, idMaps) {
         var old = node.id;
         node.id = uuid_1.s8();
         node.ssjg = '';
@@ -2047,12 +2047,12 @@ var Topology = /** @class */ (function () {
             }
         }
     };
-    Topology.prototype.animate = function (autoplay) {
+    GraphDraw.prototype.animate = function (autoplay) {
         if (autoplay === void 0) { autoplay = false; }
         this.animateLayer.readyPlay(null, autoplay);
         this.animateLayer.animate();
     };
-    Topology.prototype.updateProps = function (cache, pens, isUpdateLine) {
+    GraphDraw.prototype.updateProps = function (cache, pens, isUpdateLine) {
         if (cache === void 0) { cache = true; }
         if (!pens) {
             pens = this.activeLayer.pens;
@@ -2073,7 +2073,7 @@ var Topology = /** @class */ (function () {
         // tslint:disable-next-line: no-unused-expression
         cache && this.cache();
     };
-    Topology.prototype.lock = function (lock) {
+    GraphDraw.prototype.lock = function (lock) {
         this.data.locked = lock;
         for (var _i = 0, _a = this.data.pens; _i < _a.length; _i++) {
             var item = _a[_i];
@@ -2081,7 +2081,7 @@ var Topology = /** @class */ (function () {
         }
         this.dispatch('locked', this.data.locked);
     };
-    Topology.prototype.lockPens = function (pens, lock) {
+    GraphDraw.prototype.lockPens = function (pens, lock) {
         for (var _i = 0, _a = this.data.pens; _i < _a.length; _i++) {
             var item = _a[_i];
             for (var _b = 0, pens_4 = pens; _b < pens_4.length; _b++) {
@@ -2098,21 +2098,21 @@ var Topology = /** @class */ (function () {
             lock: lock
         });
     };
-    Topology.prototype.top = function (pen) {
+    GraphDraw.prototype.top = function (pen) {
         var i = this.find(pen);
         if (i > -1) {
             this.data.pens.push(this.data.pens[i]);
             this.data.pens.splice(i, 1);
         }
     };
-    Topology.prototype.bottom = function (pen) {
+    GraphDraw.prototype.bottom = function (pen) {
         var i = this.find(pen);
         if (i > -1) {
             this.data.pens.unshift(this.data.pens[i]);
             this.data.pens.splice(i + 1, 1);
         }
     };
-    Topology.prototype.textCombine = function (pens, stand) {
+    GraphDraw.prototype.textCombine = function (pens, stand) {
         if (stand === void 0) { stand = true; }
         if (!pens) {
             pens = this.activeLayer.pens;
@@ -2126,13 +2126,13 @@ var Topology = /** @class */ (function () {
             }
         }
     };
-    Topology.prototype.findIndex = function (pen, pens) {
+    GraphDraw.prototype.findIndex = function (pen, pens) {
         if (!pens) {
             pens = this.data.pens;
         }
         return pens.findIndex(function (item) { return item.id === pen.id; });
     };
-    Topology.prototype.combine = function (pens, stand) {
+    GraphDraw.prototype.combine = function (pens, stand) {
         if (stand === void 0) { stand = true; }
         if (!pens) {
             pens = this.activeLayer.pens;
@@ -2179,7 +2179,7 @@ var Topology = /** @class */ (function () {
         this.dispatch('node', node);
         this.cache();
     };
-    Topology.prototype.uncombine = function (node) {
+    GraphDraw.prototype.uncombine = function (node) {
         if (!node) {
             node = this.activeLayer.pens[0];
         }
@@ -2210,7 +2210,7 @@ var Topology = /** @class */ (function () {
         this.hoverLayer.clear();
         return children;
     };
-    Topology.prototype.find = function (pen) {
+    GraphDraw.prototype.find = function (pen) {
         for (var i = 0; i < this.data.pens.length; ++i) {
             if (pen.id === this.data.pens[i].id) {
                 return i;
@@ -2218,7 +2218,7 @@ var Topology = /** @class */ (function () {
         }
         return -1;
     };
-    Topology.prototype.translate = function (x, y, process, lastEmpty) {
+    GraphDraw.prototype.translate = function (x, y, process, lastEmpty) {
         if (lastEmpty === void 0) { lastEmpty = false; }
         if (!process) {
             this.lastTranlated.x = 0;
@@ -2240,7 +2240,7 @@ var Topology = /** @class */ (function () {
         this.dispatch('translate', { x: x, y: y });
     };
     //移动到指定点
-    Topology.prototype.moveToAssignPoint = function (domId, id, scale) {
+    GraphDraw.prototype.moveToAssignPoint = function (domId, id, scale) {
         var _this = this;
         var pens = this.data.pens || [];
         if (pens.length === 0) {
@@ -2278,7 +2278,7 @@ var Topology = /** @class */ (function () {
     // scale for scaled canvas:
     //   > 1, expand
     //   < 1, reduce
-    Topology.prototype.scale = function (scale, center) {
+    GraphDraw.prototype.scale = function (scale, center) {
         this.data.scale *= scale;
         !center && (center = this.getRect().center);
         for (var _i = 0, _a = this.data.pens; _i < _a.length; _i++) {
@@ -2296,11 +2296,11 @@ var Topology = /** @class */ (function () {
         this.dispatch('scale', this.data.scale);
     };
     // scale for origin canvas:
-    Topology.prototype.scaleTo = function (scale, center) {
+    GraphDraw.prototype.scaleTo = function (scale, center) {
         this.scale(scale / this.data.scale, center);
         this.data.scale = scale;
     };
-    Topology.prototype.round = function () {
+    GraphDraw.prototype.round = function () {
         for (var _i = 0, _a = this.data.pens; _i < _a.length; _i++) {
             var item = _a[_i];
             if (item instanceof node_1.Node) {
@@ -2308,10 +2308,10 @@ var Topology = /** @class */ (function () {
             }
         }
     };
-    Topology.prototype.generateStoreKey = function (key) {
+    GraphDraw.prototype.generateStoreKey = function (key) {
         return this.id + "-" + key;
     };
-    Topology.prototype.createMarkdownTip = function () {
+    GraphDraw.prototype.createMarkdownTip = function () {
         this.tipMarkdown = document.createElement('div');
         this.tipMarkdown.style.position = 'fixed';
         this.tipMarkdown.style.zIndex = '-1';
@@ -2328,7 +2328,7 @@ var Topology = /** @class */ (function () {
         document.body.appendChild(this.tipMarkdown);
         return this.tipMarkdown;
     };
-    Topology.prototype.showTip = function (data, pos) {
+    GraphDraw.prototype.showTip = function (data, pos) {
         if (!this.data.locked || !data || (!data.markdown && !data.tipId && !data.title) || data.id === this.tip) {
             return;
         }
@@ -2384,7 +2384,7 @@ var Topology = /** @class */ (function () {
         this.tip = data.id;
         this.dispatch('tip', elem);
     };
-    Topology.prototype.hideTip = function () {
+    GraphDraw.prototype.hideTip = function () {
         if (!this.tip) {
             return;
         }
@@ -2398,7 +2398,7 @@ var Topology = /** @class */ (function () {
         this.divLayer.canvas.title = '';
         this.tip = '';
     };
-    Topology.prototype.scroll = function (x, y) {
+    GraphDraw.prototype.scroll = function (x, y) {
         var _this = this;
         if (this.scrolling) {
             return;
@@ -2410,7 +2410,7 @@ var Topology = /** @class */ (function () {
             _this.scrolling = false;
         }, 700);
     };
-    Topology.prototype.toComponent = function (pens) {
+    GraphDraw.prototype.toComponent = function (pens) {
         if (!pens) {
             pens = this.data.pens;
         }
@@ -2446,15 +2446,15 @@ var Topology = /** @class */ (function () {
         }
         return node;
     };
-    Topology.prototype.clearBkImg = function () {
+    GraphDraw.prototype.clearBkImg = function () {
         this.canvas.clearBkImg();
     };
-    Topology.prototype.dispatch = function (event, data) {
+    GraphDraw.prototype.dispatch = function (event, data) {
         if (this.options.on) {
             this.options.on(event, data);
         }
     };
-    Topology.prototype.getValue = function (idOrTag, attr) {
+    GraphDraw.prototype.getValue = function (idOrTag, attr) {
         if (attr === void 0) { attr = 'text'; }
         var pen;
         this.data.pens.forEach(function (item) {
@@ -2465,7 +2465,7 @@ var Topology = /** @class */ (function () {
         });
         return pen[attr];
     };
-    Topology.prototype.setValue = function (idOrTag, val, attr) {
+    GraphDraw.prototype.setValue = function (idOrTag, val, attr) {
         if (attr === void 0) { attr = 'text'; }
         var pen;
         this.data.pens.forEach(function (item) {
@@ -2476,7 +2476,7 @@ var Topology = /** @class */ (function () {
         });
         pen[attr] = val;
     };
-    Topology.prototype.destroy = function () {
+    GraphDraw.prototype.destroy = function () {
         this.subcribe.unsubscribe();
         this.subcribeRender.unsubscribe();
         this.subcribeImage.unsubscribe();
@@ -2490,7 +2490,7 @@ var Topology = /** @class */ (function () {
         this.closeSocket();
         window.topology = null;
     };
-    Topology.prototype.fitView = function (viewPadding) {
+    GraphDraw.prototype.fitView = function (viewPadding) {
         if (!this.hasView())
             return;
         // 1. 重置画布尺寸为容器尺寸
@@ -2515,7 +2515,7 @@ var Topology = /** @class */ (function () {
         }
         this.scale(ratio);
     };
-    Topology.prototype.centerView = function (padding) {
+    GraphDraw.prototype.centerView = function (padding) {
         if (!this.hasView())
             return;
         var rect = this.getRect();
@@ -2529,11 +2529,11 @@ var Topology = /** @class */ (function () {
         parentElem.scrollLeft = x;
         return true;
     };
-    Topology.prototype.hasView = function () {
+    GraphDraw.prototype.hasView = function () {
         var rect = this.getRect();
         return !(rect.width === 99999 || rect.height === 99999);
     };
-    Topology.prototype.getViewCenter = function (viewPadding) {
+    GraphDraw.prototype.getViewCenter = function (viewPadding) {
         var padding = padding_1.formatPadding(viewPadding || this.options.viewPadding);
         var _a = this.canvas, width = _a.width, height = _a.height;
         return {
@@ -2541,7 +2541,7 @@ var Topology = /** @class */ (function () {
             y: (height - padding[0] - padding[2]) / 2 + padding[0]
         };
     };
-    Topology.prototype.throttle = function (fn, delay) {
+    GraphDraw.prototype.throttle = function (fn, delay) {
         if (delay === void 0) { delay = 200; }
         var pre;
         return function () {
@@ -2557,7 +2557,7 @@ var Topology = /** @class */ (function () {
             }
         };
     };
-    Topology.prototype.restoreColor = function () {
+    GraphDraw.prototype.restoreColor = function () {
         var _this = this;
         this.data.pens.map(function (it) {
             if (it.children && it.children.length > 0) {
@@ -2580,6 +2580,6 @@ var Topology = /** @class */ (function () {
         });
         this.render();
     };
-    return Topology;
+    return GraphDraw;
 }());
-exports.Topology = Topology;
+exports.GraphDraw = GraphDraw;
