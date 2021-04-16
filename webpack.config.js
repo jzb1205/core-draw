@@ -6,7 +6,7 @@ module.exports = {
     output: {
         filename: 'Topology.js',
         path: path.resolve(__dirname, 'lib'),
-        library: "Topology",
+        libraryTarget: "umd"
     },
     module: {
         rules: [{

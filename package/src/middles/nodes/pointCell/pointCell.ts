@@ -8,7 +8,7 @@
  */
 import { Node } from '../../../models/node';
 // import PointSymbol from 'core-symbol'
-import PointSymbol from './../../../../../../core-symbol/package/index'  //本地测试
+import { PointSymbol } from '../../../../../../core-symbol/package/index'  //本地测试
 
 export function pointCell(ctx: CanvasRenderingContext2D, node: Node) {
   const size = node.symbolSize || 1
@@ -19,19 +19,18 @@ export function pointCell(ctx: CanvasRenderingContext2D, node: Node) {
   
   let symbolStyle = {
     symbolid:node.realSymbolId,
-    symbolsize:size,
+    symbolsize:size*node.scaleNum/node.fontScale,
     symbolcolor:node.fillStyle,
-    color:node.fillStyle,
     angle:node.rotate,
-    scale:size*node.scaleNum/node.fontScale,
     opacity:1
   }
-  
+
   if (!window.drawSymbol) {
     window.drawSymbol = new PointSymbol()
   }
-  let symbol = window.drawSymbol
   
+  let symbol = window.drawSymbol
+
   symbol.draw(ctx, {x,y},symbolStyle);
 }
 
