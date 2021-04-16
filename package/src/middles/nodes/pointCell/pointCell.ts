@@ -7,8 +7,9 @@
  * @FilePath: \gongfengd:\专题图\auto-draw\public\js\core\src\middles\nodes\pointCell\pointCell.ts
  */
 import { Node } from '../../../models/node';
-// import PointSymbol from 'core-symbol'
-import { PointSymbol } from '../../../../../../core-symbol/package/index'  //本地测试
+import { PointSymbol } from 'core-symbol'  //第三方包
+// import { PointSymbol } from '../../../../../../core-symbol/package/index'  //本地测试 原代码
+// import { PointSymbol } from '../../../../../../core-symbol/lib/pointSymbol'  //本地测试 打包代码
 
 export function pointCell(ctx: CanvasRenderingContext2D, node: Node) {
   const size = node.symbolSize || 1

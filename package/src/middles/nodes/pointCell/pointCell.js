@@ -1,8 +1,9 @@
 "use strict";
 exports.__esModule = true;
 exports.pointCell = void 0;
-// import PointSymbol from 'core-symbol'
-var index_1 = require("../../../../../../core-symbol/package/index"); //本地测试
+var core_symbol_1 = require("core-symbol"); //第三方包
+// import { PointSymbol } from '../../../../../../core-symbol/package/index'  //本地测试 原代码
+// import { PointSymbol } from '../../../../../../core-symbol/lib/pointSymbol'  //本地测试 打包代码
 function pointCell(ctx, node) {
     var size = node.symbolSize || 1;
     var w = node.rect.width;
@@ -17,7 +18,7 @@ function pointCell(ctx, node) {
         opacity: 1
     };
     if (!window.drawSymbol) {
-        window.drawSymbol = new index_1.PointSymbol();
+        window.drawSymbol = new core_symbol_1.PointSymbol();
     }
     var symbol = window.drawSymbol;
     symbol.draw(ctx, { x: x, y: y }, symbolStyle);
